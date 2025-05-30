@@ -23,7 +23,7 @@ class AdminLoginRequest extends FormRequest
     {
         return [
             'phone' => 'required|min:11|max:11',
-            'password' => 'required',
+            'password' => 'required|numeric',
 
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\User\UserLoginRequest;
 use App\Http\Requests\User\UserRegisterRequest;
 use \Illuminate\Http\JsonResponse;
@@ -12,23 +13,29 @@ use Illuminate\Support\Facades\Auth;
 
 class UserAuthController extends Controller
 {
-    public function login(UserLoginRequest $request) {
+    public function login(UserLoginRequest $request): JsonResponse
+    {
         $credentials = $request->only('phone', 'password');
         $user = User::where('phone', $credentials['phone'])
             ->where('password', $credentials['password'])
             ->first();
+
         $token = $user->createToken('personal_access_token')->plainTextToken;
         return response()->json([
             'bearer token' => $token,
         ]);
     }
-    public function register(UserRegisterRequest $request) {
 
+    public function register(UserRegisterRequest $request): JsonResponse
+    {
+        $credentials = $request->only('phone', 'name', 'email', 'password');
+        info($credentials);
         $user = User::create([
-            'phone' => $request['phone'],
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => bcrypt($request['password']),
+            'phone' => $credentials['phone'],
+            'email' => $credentials['email'],
+            'password' => bcrypt($credentials['password']),
+            'name' => $credentials['name'],
+
         ]);
         $token = $user->createToken('personal_access_token')->plainTextToken;
         return response()->json([
@@ -36,7 +43,7 @@ class UserAuthController extends Controller
         ]);
     }
 
-    public function changePassword(Request $request): JsonResponse
+    public function changePassword(ChangePasswordRequest $request): JsonResponse
     {
 
         $user = Auth::user()->id;
@@ -48,7 +55,9 @@ class UserAuthController extends Controller
                 'Your password changed successfully'
         ]);
     }
-    public function logout(Request $request) {
+
+    public function logout(Request $request)
+    {
         Auth::guard('web')->logout();
         return response()->json([
             'message' =>

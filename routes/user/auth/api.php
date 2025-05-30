@@ -5,10 +5,11 @@ use \App\Http\Controllers\User\UserAuthController;
 
 Route::prefix('user')->group(function () {
     Route::controller(UserAuthController::class)->group(function () {
-        Route::get('/login',action:'login')->name('login');
+        Route::post('/login',action:'login')->name('login') ;
         Route::post('/register',action:'register')->name('register');
-        Route::post('/change-password',action:'changePassword')->name('changePassword');
-        Route::get('/logout',action:'logout')->name('logout');
+        Route::post('/change-password',action:'changePassword')->name('changePassword')
+            ->middleware('auth:sanctum');
+        Route::get('/logout',action:'logout')->name('logout')->middleware('auth:sanctum');
     });
 });
 
