@@ -12,10 +12,5 @@ class Admin extends User
 
     protected $table = 'users';
 
-    protected $fillable = ['name','phone','password','email'];
-
-    public static function where(string $string, mixed $phone)
-    {
-    }
 
 }

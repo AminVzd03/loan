@@ -5,15 +5,22 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserTypes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
+    protected $fillable = [
+        'name',
+        'phone',
+        'email',
+        'password',
+    ];
     public function scopeIsAdmin($query): void
     {
         $query->where('user_type',UserTypes::ADMIN->value);
@@ -25,11 +32,15 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+
+    // Relations
+    public function loans(): HasMany {
+        return $this->hasMany(Loan::class);
+    }
+
+    public function demands(): HasMany {
+        return $this->hasMany(Demand::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

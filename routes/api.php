@@ -1,5 +1,6 @@
 <?php
 require 'admin/auth/api.php';
+require 'user/auth/api.php';
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

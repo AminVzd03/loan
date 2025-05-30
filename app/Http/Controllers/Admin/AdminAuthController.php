@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminAuthController extends Controller
 {
-    public function login(AdminLoginRequest $request): JsonResponse
+    public function login(AdminLoginRequest $request) :JsonResponse
     {
         $credentials = $request->only('phone', 'password');
         $admin = Admin::where('phone', $credentials['phone'])
