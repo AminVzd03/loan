@@ -9,6 +9,7 @@ use App\Http\Requests\User\UserRegisterRequest;
 use \Illuminate\Http\JsonResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class UserAuthController extends Controller
@@ -58,11 +59,13 @@ class UserAuthController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::guard('web')->logout();
+        $providers = App::getLoadedProviders();
+        info($providers);
+       /* Auth::guard('web')->logout();
         return response()->json([
             'message' =>
                 'You logged out'
-        ]);
+        ]);*/
 
     }
 }
