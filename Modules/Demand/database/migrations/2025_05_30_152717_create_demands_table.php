@@ -1,12 +1,13 @@
 <?php
 
+namespace Modules\Demand\database\migrations;
+
+use Modules\Demand\src\enum\DemandStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Enums\DemandStatus;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->bigInteger('amount');
-            $table->enum('status',DemandStatus::values())->default(DemandStatus::PENDING->value);
+            $table->enum('status', DemandStatus::values())->default(DemandStatus::PENDING->value);
             $table->integer('installments');
             $table->string('description');
             $table->timestamps();

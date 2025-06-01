@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('loan_id')->constrained('loans');
-            $table->foreignId('demand_id')->constrained('demands');
+            //$table->foreignId('loan_id')->constrained('loans')->nullable();
+            //$table->foreignId('demand_id')->constrained('demands');
 
         });
     }

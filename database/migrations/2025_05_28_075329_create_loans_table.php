@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('installment_period');
             $table->json('installment_ids');
             $table->integer('installment_amount');
-            $table->foreignId('user_id')->constrained('users');
+            //$table->foreignId('user_id')->constrained('users');
             $table->enum('status', LoanStatus::values());
 
             $table->timestamps();
