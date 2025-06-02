@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('due_date')->nullable();
             $table->timestamp('paid_at')->nullable();
             $table->integer('fine_amount')->nullable();
+            $table->boolean('fined')->default(false);
             $table->integer('paid_amount')->nullable();
             $table->enum('payment_method', PaymentMethod::values())->default(PaymentMethod::GATEWAY->value);
             $table->integer('fined_days')->nullable();

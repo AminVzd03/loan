@@ -21,7 +21,10 @@ class DemandController extends Controller
         return $this->userDemandRepository->create($user, $request);
     }
     public function show() {
+        $user = Auth::user();
+        return $this->userDemandRepository->show($user);
 
     }
+
 
 }

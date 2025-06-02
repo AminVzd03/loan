@@ -1,30 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace Modules\User\src\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\User\UserLoginRequest;
 use App\Http\Requests\User\UserRegisterRequest;
-use \Illuminate\Http\JsonResponse;
-use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Modules\User\Models\User;
 
 class UserAuthController extends Controller
 {
-    public function login(UserLoginRequest $request): JsonResponse
+    public function login(UserLoginRequest $request)
     {
         $credentials = $request->only('phone', 'password');
-        $user = User::where('phone', $credentials['phone'])
+         User::where('phone', $credentials['phone'])
             ->where('password', $credentials['password'])
             ->first();
 
-        $token = $user->createToken('personal_access_token')->plainTextToken;
+       /* $token = $user->createToken('personal_access_token')->plainTextToken;
         return response()->json([
             'bearer token' => $token,
-        ]);
+        ]);*/
+        return view('User::userLayout');
     }
 
     public function register(UserRegisterRequest $request): JsonResponse

@@ -2,9 +2,9 @@
 
 namespace Modules\Demand\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\User\Models\User;
 
 class Demand extends Model
 {
