@@ -3,7 +3,7 @@
 
 namespace Modules\Demand\src\Interfaces\user;
 
-use App\Models\User;
+use Modules\User\Models\User;
 
 interface UserDemandRepositoryInterface
 {
@@ -11,9 +11,9 @@ interface UserDemandRepositoryInterface
 
     public function show($user);
 
-    public function update();
+    public function update($request, $user);
 
-    public function delete();
+    public function delete($user);
 
     public function checkUserHasPendingDemand(User $user): bool;
 

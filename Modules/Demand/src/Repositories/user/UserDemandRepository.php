@@ -3,11 +3,11 @@
 
 namespace Modules\Demand\src\Repositories\user;
 
-
-use App\Enums\LoanStatus;
 use Modules\Demand\Models\Demand;
 use Modules\Demand\src\enum\DemandStatus;
 use Modules\Demand\src\Interfaces\user\UserDemandRepositoryInterface;
+use Modules\Loan\Models\Loan;
+use Modules\Loan\src\Enum\LoanStatus;
 
 class UserDemandRepository implements UserDemandRepositoryInterface
 {
@@ -32,16 +32,31 @@ class UserDemandRepository implements UserDemandRepositoryInterface
 
     public function show($user)
     {
-        return Demand::where('user_id',$user->id)->firstOrFail();
+        $demand = Demand::where('user_id',$user->id)->firstOrFail();
+        return view('Demand::demandLayout', ['demand' => $demand]);
     }
 
-    public function update()
+    public function update($request, $user): array
     {
+        $demand = $this->show($user);
+        $demand->update([
+            'amount' => $request->amount,
+            'status' => DemandStatus::PENDING,
+            'installment' => $request->installment,
+            'description' => $request->description,
+        ]);
+        return $message = [
+            'message' => 'Demand updated successfully.'
+        ];
     }
 
-    public function delete()
+    public function delete($user)
     {
-
+            $demand = $this->show($user);
+            $demand->delete();
+            return $message = [
+                'message' => 'Demand deleted successfully.'
+            ];
     }
 
     public function checkUserHasPendingDemand($user): bool
