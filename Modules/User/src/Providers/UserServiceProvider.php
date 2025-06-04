@@ -20,7 +20,7 @@ class UserServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadRoutesFrom(base_path('Modules/User/routes/web.php'));
-        $this->loadViewsFrom(base_path('Modules/User/resources/views'), 'User');
+        $this->loadViewsFrom(base_path('Modules/User/src/resources/views'), 'User');
         $this->loadMigrationsFrom(base_path('Modules/User/database/migrations'));
     }
 }

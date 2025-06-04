@@ -39,10 +39,5 @@ class installmentRepository implements installmentRepositoryInterface
             }
             $fined_amount = $fined_counts * $installment->amount * 0.00096774 * $finedDays;
 
-
-
-
-
-
     }
 }
