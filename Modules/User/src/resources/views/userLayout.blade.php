@@ -214,7 +214,7 @@
     <h1>Welcome back</h1>
     <p class="subtitle">Please enter your details to sign in</p>
 
-    <form action="{{route('demand.create')}}" method="post">
+    <form action="" method="post">
         @csrf
         <div class="input-group">
             <label for="phone">Phone Number</label>
@@ -239,8 +239,9 @@
 
         <div class="divider">or</div>
 
-        <button type="button" class="signup-btn">Sign Up</button>
+
     </form>
+    <a href="{{route('register-page')}}"> <button type="submit" class="signup-btn">Sign Up</button></a>
 </div>
 </body>
 </html>

@@ -10,28 +10,23 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Modules\User\Models\User;
 
 class UserAuthController extends Controller
 {
-    public function login(UserLoginRequest $request)
+    public function loginPage(): View
     {
-        $credentials = $request->only('phone', 'password');
-         User::where('phone', $credentials['phone'])
-            ->where('password', $credentials['password'])
-            ->first();
-
-       /* $token = $user->createToken('personal_access_token')->plainTextToken;
-        return response()->json([
-            'bearer token' => $token,
-        ]);*/
         return view('User::userLayout');
     }
+    public function registerPage(): View {
+            return view('User::register');
+    }
 
-    public function register(UserRegisterRequest $request): JsonResponse
+    public
+    function register(UserRegisterRequest $request)
     {
         $credentials = $request->only('phone', 'name', 'email', 'password');
-        info($credentials);
         $user = User::create([
             'phone' => $credentials['phone'],
             'email' => $credentials['email'],
@@ -39,13 +34,35 @@ class UserAuthController extends Controller
             'name' => $credentials['name'],
 
         ]);
-        $token = $user->createToken('personal_access_token')->plainTextToken;
-        return response()->json([
-            'bearer token' => $token,
-        ]);
+        return redirect()->route('dashboard',['user' => $user]);
+    }
+    public function login(UserLoginRequest $request): \Illuminate\Http\RedirectResponse
+    {
+        $credentials = $request->only('phone', 'password');
+        $user = User::where('phone', $credentials['phone'])
+            ->where('password', $credentials['password'])
+            ->firstOrFail();
+
+        $user->createToken('personal_access_token')->plainTextToken;
+
+        return  redirect()->route('dashboard');
     }
 
-    public function changePassword(ChangePasswordRequest $request): JsonResponse
+
+    public function dashboard()
+    {
+
+        if(Auth::check()) {
+            $user = Auth::user();
+            return view('User::dashboard', ['user' => $user]);
+        }
+        return redirect()->route('login-page');
+
+    }
+
+
+    public
+    function changePassword(ChangePasswordRequest $request): JsonResponse
     {
 
         $user = Auth::user()->id;
@@ -58,15 +75,16 @@ class UserAuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request)
+    public
+    function logout(Request $request)
     {
         $providers = App::getLoadedProviders();
         info($providers);
-       /* Auth::guard('web')->logout();
-        return response()->json([
-            'message' =>
-                'You logged out'
-        ]);*/
+        /* Auth::guard('web')->logout();
+         return response()->json([
+             'message' =>
+                 'You logged out'
+         ]);*/
 
     }
 }
