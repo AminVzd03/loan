@@ -36,23 +36,25 @@ class UserAuthController extends Controller
         ]);
         return redirect()->route('dashboard',['user' => $user]);
     }
-    public function login(UserLoginRequest $request): \Illuminate\Http\RedirectResponse
+    public function login(UserLoginRequest $request) /*\Illuminate\Http\RedirectResponse*/
     {
+
         $credentials = $request->only('phone', 'password');
+        info($credentials);
         $user = User::where('phone', $credentials['phone'])
             ->where('password', $credentials['password'])
             ->firstOrFail();
 
         $user->createToken('personal_access_token')->plainTextToken;
 
-        return  redirect()->route('dashboard');
+        return  /*redirect()->route('dashboard');*/ dd('check check');
     }
 
 
     public function dashboard()
     {
 
-        if(Auth::check()) {
+        if(!Auth::check()) {
             $user = Auth::user();
             return view('User::dashboard', ['user' => $user]);
         }
