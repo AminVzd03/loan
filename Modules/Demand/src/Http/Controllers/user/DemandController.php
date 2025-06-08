@@ -15,11 +15,17 @@ class DemandController extends Controller
         $this->userDemandRepository = $userDemandRepository;
     }
 
+    /*
+     * Create Demand
+     *  */
     public function create($user, CreateUserDemandRequest $request): array
     {
         $user = Auth::user();
         return $this->userDemandRepository->create($user, $request);
     }
+    /*
+    * Show Demand
+    *  */
     public function show() {
         $user = Auth::user();
         return $this->userDemandRepository->show($user);

@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
             'name' => 'Amin Valizade' ,
             'phone' => '09354379206',
             'email' => 'aminvzd@gmial.com',
-            'password' => bcrypt('225588'),
+            'password' => '225588',
             'user_type' => UserTypes::USER->value,
         ]);
     }

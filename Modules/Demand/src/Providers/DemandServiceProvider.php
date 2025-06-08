@@ -18,7 +18,7 @@ class DemandServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadRoutesFrom(base_path('Modules/Demand/routes/user/web.php'));
+        $this->loadRoutesFrom(base_path('Modules/Demand/routes/user/api.php'));
         $this->loadMigrationsFrom(base_path('Modules/Demand/database/migrations'));
         $this->loadViewsFrom(base_path('Modules/Demand/views'), 'Demand');
     }
