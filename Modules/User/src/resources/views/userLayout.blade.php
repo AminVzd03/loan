@@ -214,25 +214,22 @@
     <h1>Welcome back</h1>
     <p class="subtitle">Please enter your details to sign in</p>
 
-    <form action="" method="post">
+    <form method="POST" action="{{route('login-submit')}}">
         @csrf
         <div class="input-group">
             <label for="phone">Phone Number</label>
             <div class="country-code">
                 <select id="country-code">
-                    <option value="+1">+1 (US)</option>
-                    <option value="+44">+44 (UK)</option>
-                    <option value="+98">+98 (IR)</option>
-                    <option value="+91">+91 (IN)</option>
-                    <option value="+86">+86 (CN)</option>
+                    <option value="">+98 (IR)</option>
+
                 </select>
-                <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" value="9354379206" required>
             </div>
         </div>
 
         <div class="input-group">
             <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter your password" required>
+            <input type="password" name="password" value="225588" id="password" placeholder="Enter your password" required>
         </div>
 
         <button type="submit" class="login-btn">Sign In</button>

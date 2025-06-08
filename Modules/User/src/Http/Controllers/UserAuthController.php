@@ -19,8 +19,16 @@ class UserAuthController extends Controller
     {
         return view('User::userLayout');
     }
-    public function registerPage(): View {
-            return view('User::register');
+
+    public function registerPage(): View
+    {
+        return view('User::register');
+    }
+
+    public function dashboard()
+    {
+        $user = Auth::user();
+        return view('User::dashboard', compact('user'));
     }
 
     public
@@ -30,36 +38,24 @@ class UserAuthController extends Controller
         $user = User::create([
             'phone' => $credentials['phone'],
             'email' => $credentials['email'],
-            'password' => bcrypt($credentials['password']),
+            'password' => $credentials['password'],
             'name' => $credentials['name'],
 
         ]);
-        return redirect()->route('dashboard',['user' => $user]);
+        return redirect()->route('dashboard', ['user' => $user]);
     }
-    public function login(UserLoginRequest $request): \Illuminate\Http\RedirectResponse
+
+    public function loginSubmit(UserLoginRequest $request) /*\Illuminate\Http\RedirectResponse*/
     {
         $credentials = $request->only('phone', 'password');
         $user = User::where('phone', $credentials['phone'])
             ->where('password', $credentials['password'])
-            ->firstOrFail();
+            ->first();
+        info($user);
+        Auth::login($user);
 
-        $user->createToken('personal_access_token')->plainTextToken;
-
-        return  redirect()->route('dashboard');
+        return redirect()->route('dashboard', ['user' => $user]);
     }
-
-
-    public function dashboard()
-    {
-
-        if(Auth::check()) {
-            $user = Auth::user();
-            return view('User::dashboard', ['user' => $user]);
-        }
-        return redirect()->route('login-page');
-
-    }
-
 
     public
     function changePassword(ChangePasswordRequest $request): JsonResponse
@@ -78,13 +74,10 @@ class UserAuthController extends Controller
     public
     function logout(Request $request)
     {
-        $providers = App::getLoadedProviders();
-        info($providers);
-        /* Auth::guard('web')->logout();
-         return response()->json([
-             'message' =>
-                 'You logged out'
-         ]);*/
+
+         Auth::guard('web')->logout();
+         return redirect()->route('login');
+
 
     }
 }

@@ -24,6 +24,8 @@ class CreateUserDemandRequest extends FormRequest
     {
         return [
             'amount' => 'required',
+            'installment' => 'required|numeric',
+            'description' => 'required:max:1000',
         ];
     }
 }
