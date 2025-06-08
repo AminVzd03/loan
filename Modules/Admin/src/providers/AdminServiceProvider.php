@@ -19,6 +19,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
         $this->loadMigrationsFrom(base_path('Modules/Admin/database/migrations'));
     }
 }

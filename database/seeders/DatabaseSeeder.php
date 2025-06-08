@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\Admin\database\DefaultSettingSeeder;
+use Modules\Admin\database\seeder\DefaultSettingSeeder;
 use Modules\User\database\seeder\UserSeeder;
-use Modules\User\Models\User;
 
 // use Illuminate\database\Console\Seeds\WithoutModelEvents;
 
