@@ -1,5 +1,4 @@
 {
-    "_comment" : "Composer schema for modules",
     "name": "loan/module-admin",
     "license": "MIT",
     "authors": [
@@ -12,6 +11,11 @@
     "autoload": {
         "psr-4": {
             "Modules\\Admin\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Admin\\tests": "src/"
         }
     },
 
